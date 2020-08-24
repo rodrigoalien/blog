@@ -47,10 +47,13 @@ app.get("/compose", function(req, res){
     res.render("compose");
 });
 
-app.get("/posts/:postTitle", function(req, res) {
+app.get("/posts/:postTitle", function(req, res){
+    const requestTitle = _.lowerCase(req.params.postTitle);
 
     posts.forEach(function(post){
-        if(_.lowerCase(req.params.postTitle) === _.lowerCase(post.title)){
+        const storedTitle = _.lowerCase(post.title);
+
+        if(requestTitle === storedTitle){
             console.log("Match found!");
             res.render("post", {
                 title: post.title,
